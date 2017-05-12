@@ -7,10 +7,13 @@
 #   技术架构
 
 容器化与微服务：
-#   octave nodejs  docker镜像制作于部署
+#   定义概念
+#   octave nodejs  docker镜像制作于部署 安装
 #   docker 容器api控制接口
-#   docker的容器启动与管理
+#   docker的微服务 已经simulay系统服务框图
 
+
+webTerminal实现原理：
 前端：
 #   前端部署
 #   前端架构与设计
