@@ -28,7 +28,7 @@ webTerminal实现原理：
 
 存储：
 #   存储系统NoSQL的使用
-#   缓存处理
+#   couchDB
 
 API平台：
 #   实验数据数据api设计
