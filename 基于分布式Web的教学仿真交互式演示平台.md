@@ -17,7 +17,7 @@ simulay是一个基于分布式容器化web在线仿真教学交互演示系统�
 
 ##技术架构：
 
-![技术架构](img/simulay系统架构.svg)
+![技术架构](img/simulay系统架构.png)
 
 ###在线仿真系统
 系统是基于浏览器平台的，无论用户使用的是什么操作系统， 只需要一个webkit内核的浏览器，即可打开该系统。
@@ -130,7 +130,7 @@ $ curl --unix-socket /var/run/docker.sock -H "Content-Type: application/json" \
 
 容器与微服务架构图：
 
-![容器与微服务架构图](img/容器微服务系统架构.svg)
+![容器与微服务架构图](img/容器微服务系统架构.png)
 
 
 #第三章: WebTerminal设计与实践
@@ -150,7 +150,7 @@ SSH 是一个基于的 server-client 的架构，用户通过终端将字符流�
 
 ##WebTerminal原理框图：
 
-![WEBTERMINAL](img/WebTerminal的工作原理.svg)
+![WEBTERMINAL](img/WebTerminal的工作原理.png)
 
 ###WebTerminal 工作流程：
 
@@ -185,7 +185,7 @@ simulay 的 前端子项目使用 vue-cli 创建前端的工程项目, 是一个
 前端目前的代码已经不是传统的引用几个 js 脚本了, 而是一个规范的软件工程项目, 所有的代码与样式都要通过前端的编译打包工具才能发布出去.
 
 构建工具任务流
-![](img/前端打包.svg)
+![](img/webpack构建.png)
 
 得益于先进的打包工具, 在开发中我们用工程化和模块化组件化的思路去开发, 一方面提高了项目的规范性,另增加了项目结构的清晰程度.  开发的时候无需考虑部署到浏览器中问题,  因为有 webpack 打包编译流程, 自动化的把项目各种资源分类打包输出到目录中. 
 
@@ -276,7 +276,7 @@ Nginx("engine x")是一款是由俄罗斯的程序设计师Igor Sysoev所开发�
 在本系统中主要负责 负载均衡,动静分离
 具体的功能框图如下:
 
-![](img/Nignx负载均衡动静分离.svg) 
+![](img/Nignx负载均衡动静分离.png) 
 
 ###负载均衡:
 nginx反向代理其实主要通过配置proxy_pass参数即可代理到某个服务器
@@ -352,7 +352,7 @@ NoSQL是对不同于传统的关系数据库的数据库管理系统的统称。
 ## web后台 MongoDB 
 
 在 simulay 后台系统中使用了 MongoDB 作为底层的数据库,MongoDB是一种文档导向数据库管理系统, 在后台中, simulay 系统结合了 mongoose 的 orm 模型对象封装, 整体的 DB 模型如下:
-![](img/DBSCheme.svg)
+![](img/DBSCheme.png)
 
 ##  代码存储 couchDB
 CouchDB（Couch是 cluster of unreliable commodity hardware的首字母缩写）
@@ -502,7 +502,7 @@ simulay 为了提升系统整体的加载数据, 特别从以下的几个方面�
 1.    前端文件压缩打包, 同时以单页应用的方式开发 整个系统
 2.    WebTerminal 复用 tcp/IP, 减少 TCP三次握手的请求时长
 3.    仿真结果缓存, 对于每一次实验在系统内部都是一个 runner 的对象, 假如每次把仿真的对象缓存到 DB 中, 那么下次如果有相同代码和输入的仿真请求,就可以直接从 DB 中返回仿真结果了
-4.    仿真结果的图片以  jpg, svg 矢量图的等多元格式返回到前端. 用最快的速度,最小的资源占用,加载出显示效果最好的图片
+4.    仿真结果的图片以  jpg,png, svg 矢量图的等多元格式返回到前端. 用最快的速度,最小的资源占用,加载出显示效果最好的图片
 
 5.    使用基于内存的的 key-value 缓存数据库 redis 
 
