@@ -1,9 +1,12 @@
-#第一章： 简介，功能架构 与 技术架构
+<!-- toc -->
+
+
+# 第一章： 简介，功能架构 与 技术架构
 
 simulay是一个基于分布式容器化web在线仿真教学交互演示系统， 其中核心的技术是基于容化的微服务运算平台，不仅有着分布式可扩展的优点， 同时在系统性能和系统安全等方面有着极大的提高。在功能上提供业界领先的 webIDE 和webTerminal 以供学生仿真调试使用。配合实验管理，容器管理等功能实完美的教学训练闭环。
 在开放与可扩展性上 ， 提供开放的数据API，同时以API的形式开放仿真运算平台供开发者调用
 
-##功能架构
+## 功能架构
 
 本项目着重研究基于目前最前沿的web前端与后台技术构建的可视化交互仿真系统，主要分为三大模块（子系统）：
 1. 在线仿真系统：在线编辑，调试，统计， 管理实验的可视化的web前端展示系统
@@ -15,11 +18,11 @@ simulay是一个基于分布式容器化web在线仿真教学交互演示系统�
 
 在三大模块的基础上， 又对各个功能做了细分，划分为更小粒点的模块功能。
 
-##技术架构：
+## 技术架构：
 
 ![技术架构](img/simulay系统架构.png)
 
-###在线仿真系统
+### 在线仿真系统
 系统是基于浏览器平台的，无论用户使用的是什么操作系统， 只需要一个webkit内核的浏览器，即可打开该系统。
 如果把用户的使用仿真功能过程看作一个一个流的话：
 
@@ -28,24 +31,24 @@ simulay是一个基于分布式容器化web在线仿真教学交互演示系统�
 3.   webSite调用  runner仿真平台， runner调用 容器系统的接口创建一个容器，然后在容器中运行仿真代码。
 4.   容器运算得出结果之后， 调用回调函数，把结果写入到底层的 数据库和缓存中， 同时更新该实验的结果数据。 最后把结果返回到浏览器前端
 
-###数据API平台：
+### 数据API平台：
 数据API接口是对外开放的开发者计划的一部分，主要是的功能就是把整个系统的各项功能包装一遍， 使用统一的接口风格，对外提供统一的API调用服务，对系统将每个API请求都转发到对应的模块中去，实验仿真数据查询， 容器管理，runner仿真运算平台等都可以进行API包装然后对外服务。
 
 ### 容器管理系统：
 容器管理系统提供的在线容器创建，运行，暂停，删除等操作， 为用户提供一个轻量级的容器服务（类似虚拟机，但是在资源的占用率和创建启动速度上都完胜虚拟机），让用户以最少的资源最快的速度得到一个云服务资源。
 
 
-#第二章:容器化与微服务
-##概念：
+# 第二章:容器化与微服务
+## 概念：
 
-####容器化：
+#### 容器化：
     容器为应用程序提供了隔离的运行空间，每个容器内都包含一个独享的完整用户环境空间，并且一个容器内的变动不会影响其他容器的运行环境，可以理解为轻量化的虚拟机，但是有虚拟机无法企及的创建速度和极小的资源占用，同时在部署方面十分灵活， 把传统的 dev（开发） 和 ops（运维） 结合一体 组成 devops的 开发模式。
 
-####微服务：
+#### 微服务：
     微服务是一种架构风格，一个大型复杂软件应用由一个或多个微服务组成。系统中的各个微服务可被独立部署，各个微服务之间是松耦合的。每个微服务仅关注于完成一件任务并很好地完成该任务。在所有情况下，每个任务代表着一个小的业务能力。结合分布式的系统， 可以实现去“去中心化”数据管理(DecentralizedData Management)
 
 
-##容器化使用的是目前的主流的docker技术
+## 容器化使用的是目前的主流的docker技术
 
 Docker对使用者来讲是一个C/S模式的架构，而Docker的后端是一个非常松耦合的架构。
 用户是使用Docker Client与Docker Daemon建立通信，并发送请求给后者。
@@ -98,7 +101,7 @@ sudo docker push
 后续只需要运行一下命令即可进入octave命令行界面：
 sudo docker run -it outshine/octave:1.0 octave --no-gui -silent 
 
-##dockerAPI：
+## dockerAPI：
 docker Daemon提供的 API封装，我的容器管理系统中 ，只需要实现类似的 http请求操作的封装， 即可实现容器的管理
 ```
 $ curl --unix-socket /var/run/docker.sock -H "Content-Type: application/json" \
@@ -133,11 +136,11 @@ $ curl --unix-socket /var/run/docker.sock -H "Content-Type: application/json" \
 ![容器与微服务架构图](img/容器微服务系统架构.png)
 
 
-#第三章: WebTerminal设计与实践
-##简介：
+# 第三章: WebTerminal设计与实践
+## 简介：
     WebTerminal 是一个基于hterm前端终端， websocket网页实时通信， 容器化运行shell的 实时高效安全的在线命令行，毫秒级创建运行容器并建立安全的socket连接，提供完美的用户体验，让在线版的octave 软件可以在任意一台电脑上无需安装即可使用。
 
-##TTY 与 SSH
+## TTY 与 SSH
 Terminal 是键盘和显示器的组合，也称为 TTY（电传打字机的缩写）,Terminal 作为真实的物理设备已经不复存在了，但是为了和面向终端的程序（比如Bash）进行通信，于是就了发明了 pty（Pseudoterminal，伪终端）。当 Terminal Emulator 作为一个非面向终端的程序不直接与 pty slave 通讯，而是通过文件读写流与 pty master 通讯，pty master 再将字符输入经过线路规程的转换传送给 slave，slave 进一步传递给 bash。
 关于命令行我们平时最常见就是 使用 ssh 远程登录服务器
 SSH 的原理图
@@ -148,11 +151,11 @@ SSH 是一个基于的 server-client 的架构，用户通过终端将字符流�
 
 基于 SSH 的工作原理，设计了 Web Terminal，见下图
 
-##WebTerminal原理框图：
+## WebTerminal原理框图：
 
 ![WEBTERMINAL](img/WebTerminal的工作原理.png)
 
-###WebTerminal 工作流程：
+### WebTerminal 工作流程：
 
 1.  用户在浏览器中打开终端页面，系统自动建立连接
 2.  调用 浏览器 websocket client （js调用的是 socket.io)
@@ -163,11 +166,11 @@ SSH 是一个基于的 server-client 的架构，用户通过终端将字符流�
 7.  node 把 容器传输的运行结果数据 调用 socket 的 emit() 方法发送到浏览器前端.
 8.  前端接收到数据 , 传入hterm 前端的 Terminal Emulator 展示
 
-#第四章:前端架构设计：
-##架构简介
+# 第四章:前端架构设计：
+## 架构简介
 simulay 浏览器前端系统采用当前业界最先进的前端开发模式, 采用前后端分离的架构, 用 web app 的概念取代以前的网页的概念, 整个 simulay 系统就是一个 spa(单页应用).  一次加载, 页面内切换如同原生 app 一般快速流畅. 前端的底层使用 vuw 框架, 前端的界面使用 iview 的前端组件库作为基础组件, 使用 webpack 作为前端打包工具. 使用一套现代化的前端开发模式.
 
-##前端的工程
+## 前端的工程
 simulay 的 前端子项目使用 vue-cli 创建前端的工程项目, 是一个现代化前端工程化的项目结构,主要分为以下几个方面:
 
 ### 模块化:  
@@ -189,7 +192,7 @@ simulay 的 前端子项目使用 vue-cli 创建前端的工程项目, 是一个
 
 得益于先进的打包工具, 在开发中我们用工程化和模块化组件化的思路去开发, 一方面提高了项目的规范性,另增加了项目结构的清晰程度.  开发的时候无需考虑部署到浏览器中问题,  因为有 webpack 打包编译流程, 自动化的把项目各种资源分类打包输出到目录中. 
 
-####自动化部署:
+#### 自动化部署:
 自动化部署是基于 github 的 webhook 功能实现的
 主要的步骤如下:
 
@@ -270,15 +273,15 @@ server {
 
 
 
-#第五章: 后台架构设计
-##Nignx (负载均衡,动静分离):
+# 第五章: 后台架构设计
+## Nignx (负载均衡,动静分离):
 Nginx("engine x")是一款是由俄罗斯的程序设计师Igor Sysoev所开发高性能的 Web和 反向代理 服务器
 在本系统中主要负责 负载均衡,动静分离
 具体的功能框图如下:
 
 ![](img/Nignx负载均衡动静分离.png) 
 
-###负载均衡:
+### 负载均衡:
 nginx反向代理其实主要通过配置proxy_pass参数即可代理到某个服务器
 添加如下配置即可：
 
@@ -290,7 +293,7 @@ location /api {
         }
 
 ```
-###动静分离:
+### 动静分离:
 动静分离将网站静态资源（HTML，JavaScript，CSS，img等文件）与后台应用分开部署，提高用户访问静态代码的速度，降低对后台应用访问。这里我们将静态资源放到nginx中，动态资源转发到各个容器服务中。
 在动静分离的过程中, 只需要将静态资源剥离出来即可:
 
@@ -303,7 +306,7 @@ location /api {
 
 ```
 
-##基于nodeJS express 的后台管理系统
+## 基于nodeJS express 的后台管理系统
 
 Express 是一种保持最低程度规模的灵活 Node.js Web 应用程序框架，为 Web 和移动应用程序提供一组强大的功能。
 
@@ -318,7 +321,7 @@ controller: 控制层, 又名服务层, 主要 处理当前请求的业务逻辑
 model: 模型层, 底层的数据库都是由不同的表组成的,比如(用户表, 实验表, 仿真记录表等), 如何读取这些数据呢, 如果是用sql 语句的话效率很低, 这里使用了 mongoose 这个 ORM 对象模型连接器, 也即是数据库中的数据映射到 程序中的对象, 直接调用对象方法获取数据即可,把数据库连接 sql 查询等操作做一步封装. 简化代码.  
 
 
-##websocket 通信
+## websocket 通信
 
 
 在 webTerminal 中 提到多次 websocket 这个概念. 首先解释一下它是什么,
@@ -329,13 +332,13 @@ model: 模型层, 底层的数据库都是由不同的表组成的,比如(用户
 
 ![](img/websocket.png)
 
-####WebSocket有以下特点：
+#### WebSocket有以下特点：
 
     是真正的全双工方式，建立连接后客户端与服务器端是完全平等的，可以互相主动请求。而HTTP长连接基于HTTP，是传统的客户端对服务器发起请求的模式。
     HTTP长连接中，每次数据交换除了真正的数据部分外，服务器和客户端还要大量交换HTTP header，信息交换效率很低。Websocket协议通过第一个request建立了TCP连接之后，之后交换的数据都不需要发送 HTTP header就能交换数据，这显然和原有的HTTP协议有区别所以它需要对服务器和客户端都进行升级才能实现（主流浏览器都已支持HTML5）。此外还有 multiplexing、不同的URL可以复用同一个WebSocket连接等功能。这些都是HTTP长连接不能做到的。
 
 
-####性能测试:
+#### 性能测试:
 
 在 WebTerminal 中,  如果使用 XHR Polling (传统浏览器中 AJAX
 请求,目前大部分网站前端的请求都是以这种形式发起)的话, 将平均带来几百倍的请求量消耗而且这大部门的请求都是无效的 ping 请求,
@@ -344,7 +347,7 @@ model: 模型层, 底层的数据库都是由不同的表组成的,比如(用户
 
 其中Ops/sec  是指请求次数与总耗时之比放大1000倍,可以理解为平均请求时间, 可以看出来websocket 比传统的 xhr 请求快了三倍,同时, 只建立一条 tcp/ip 连接, 对网络资源占用是 xhr  1/N(实验次数)
 
-#第六章: 存储系统-NoSQL在 simulay 中的使用
+# 第六章: 存储系统-NoSQL在 simulay 中的使用
 
 simulay 系统没有使用传统的 关系型数据库, 而是使用当前最为前沿的 NoSql, 
 NoSQL是对不同于传统的关系数据库的数据库管理系统的统称。
@@ -395,8 +398,8 @@ CouchDB（Couch是 cluster of unreliable commodity hardware的首字母缩写）
 
 
 
-#第七章: API 设计
-##RESTful API 设计简介:
+# 第七章: API 设计
+## RESTful API 设计简介:
 
 simulay 不仅仅是一个在线仿真系统, 同时也有对外提供接口服务的能力, 整套 API 的设计参考
 REST架构风格的 API 设计规范,
@@ -414,6 +417,7 @@ REST（英文：Representational State Transfer，又称具象状态传输）是
 
 
 ## 数据读取API
+
 | Action                              | Method | Route         | Requires token |
 |:------------------------------------|:-------|:--------------|:---------------|
 | [List runner](list_runner.md)   | GET    | /runner     | Optional       |
@@ -425,11 +429,16 @@ REST（英文：Representational State Transfer，又称具象状态传输）是
 
 
 
-##### Get runner
+#### Get runner
+
+```bash
     curl --request GET \
          --url 'HTTPS://simulay.outshine.me/runner/e2tx9nh4fh'
+```
 
-##### Example response data
+#### Example response data
+
+```json
     {
       "id": "e2tx9nh4fh",
       "url": "HTTPS://simulay.outshine.me/runner/e2tx9nh4fh",
@@ -450,7 +459,7 @@ REST（英文：Representational State Transfer，又称具象状态传输）是
       analysis_id: '23424251',
     }
 
-
+```
 
 ##   仿真runnerAPI
 | Action                              | Method | Route                         | Requires token |
@@ -495,7 +504,7 @@ curl --request POST \
 
 
 
-#第九章: 系统优化以及缓存
+# 第九章: 系统优化以及缓存
 
 simulay 为了提升系统整体的加载数据, 特别从以下的几个方面做了性能优化
 
@@ -506,7 +515,7 @@ simulay 为了提升系统整体的加载数据, 特别从以下的几个方面�
 
 5.    使用基于内存的的 key-value 缓存数据库 redis 
 
-###仿真结果缓存:
+### 仿真结果缓存:
 
 1.  用户发起一个仿真请求
 2.  后台接受仿真请求,并计算(代码 + 输入) 的hash 值
@@ -514,7 +523,7 @@ simulay 为了提升系统整体的加载数据, 特别从以下的几个方面�
 4.  如果查询到结果直接返回, 未查询到结果, 创建一个 runner 对象
 5.  仿真结束之后, 数据DB 写入一份, redis 缓存写入一份, 再返回到前端一份
 
-####仿真结果缓存的伪代码
+#### 仿真结果缓存的伪代码
 ```
 // 用户请求
 var request = {
@@ -545,7 +554,7 @@ svg 格式的矢量图大小取决于图片内容的丰富程度, 图片内容�
 
 生成的图片取决于用户的实际需求,是需要更快的加载速度, 还是跟清晰的仿真结果图, 所以在仿真界面设置了一个 输出图片格式的选项, 当用户选择自动时, 会默认显示压缩过jpg, 当 svg 加载成功之后, 自动把 jpg 替换掉.
 
-##redis缓存系统
+## redis缓存系统
 Redis是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和消息中间件。 它支持多种类型的数据结构，如 字符串（strings）， 散列（hashes）， 列表（lists）， 集合（sets）， 有序集合（sorted sets） 与范围查询， bitmaps， hyperloglogs 和 地理空间（geospatial） 索引半径查询。 Redis 内置了 复制（replication），LUA脚本（Lua scripting）， LRU驱动事件（LRU eviction），事务（transactions） 和不同级别的 磁盘持久化（persistence）， 并通过 Redis哨兵（Sentinel）和自动 分区（Cluster）提供高可用性（high availability）。 
 
 redis 在系统中主要充当 缓存的作用
