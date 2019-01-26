@@ -15,12 +15,12 @@
         "gitbook-plugin-signature":{
             "autoCopyright":{
                "color":"gray",
-               "owner": "<a href='https://github.com/outshineamaze/simulay' target='_blank'>outshineamaze</a>",
+               "owner": "<a href='https://outshineamaze.github.io/' target='_blank'>outshineamaze</a>",
                "center":true
             }
         },
         "github": {
-            "url": "https://github.com/outshineamaze/simulay.git"
+            "url": "https://github.com/outshineamaze/simulay"
         },
         "toc": {
             "addClass": true,
